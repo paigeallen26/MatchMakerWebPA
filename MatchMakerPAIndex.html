@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     <meta charset="UTF-8">
+     <title>MatchMaker for the Web</title> 
+     <link rel="stylesheet" href="MatchMaker.css">
+
+<!-- 
+    Author: Paige Allen
+    Project: MatchMaker for the Web
+
+    All rights reserved.
+-->
+
+
+<handlers>
+    <add name="iisnode" path="server.js" verb="*" modules="iisnode"/>
+</handlers>
+
+</head>
+<body>
+    <h1>Find out if we're a match &#128150; &#128152; Created by Paige Allen</h1>
+    <p> By dropping down the selector and selecting what you see most fit for each question, at the end, click Calculate Compatibility to see if you're the one for me!</p>
+
+    <!-- Reference for HTML "option" tabs/fields: https://w3schools.com/tags/tag_option.asp -->
+    <label> Dunkin' Donuts is the best coffee.</label><br />
+    <select id="q1">
+        <option value="5">Strongly Agree</option>
+        <option value="4">Agree</option>
+        <option value="3">Neutral</option>
+        <option value="2">Disagree</option>
+        <option value="1">Strongly Disagree</option>
+    </select>
+    <br /><br />
+    <label> Cats are the best animals.</label><br />
+    <select id="q2">
+        <option value="5">Strongly Agree</option>
+        <option value="4">Agree</option>
+        <option value="3">Neutral</option>
+        <option value="2">Disagree</option>
+        <option value="1">Strongly Disagree</option>
+    </select>
+    <br /><br />
+    <label> Sports are fun to watch!</label><br />
+    <select id="q3">
+        <option value="5">Strongly Agree</option>
+        <option value="4">Agree</option>
+        <option value="3">Neutral</option>
+        <option value="2">Disagree</option>
+        <option value="1">Strongly Disagree</option>
+    </select>
+    <br /><br />
+    <label> Brussel Sprouts are delicious!</label><br />
+    <select id="q4">
+        <option value="5">Strongly Agree</option>
+        <option value="4">Agree</option>
+        <option value="3">Neutral</option>
+        <option value="2">Disagree</option>
+        <option value="1">Strongly Disagree</option>
+    </select>
+    <br /><br />
+    <label> Fall is the best season!</label><br />
+    <select id="q5">
+        <option value="5">Strongly Agree</option>
+        <option value="4">Agree</option>
+        <option value="3">Neutral</option>
+        <option value="2">Disagree</option>
+        <option value="1">Strongly Disagree</option>
+    </select>
+    <br /><br />
+    <br /><br /><br />
+    <button onclick="calculateCompatibility()">Calculate Compatibility</button>
+    <p id="compatibility"></p>
+
+<script>
+console.log("Starting MatchMaker Lite..")
+
+
+function calculateCompatibility() {
+    const STRONGEST_ANSWERS = [
+        5, // question 1 strongly agree
+        5, // question 2 strongly agree
+        1, // question 3 strongly disagree
+        1, // question 4 strongly disagree
+        5 // question 5 strongly agree
+    ]
+    console.log("calculateCompatibility()")
+    let question1Response = document.getElementById('q1').selectedOptions[0].value;
+    console.log("R1 = " + question1Response);
+    let question2Response = document.getElementById('q2').selectedOptions[0].value;
+    console.log("R2 = " + question2Response);
+    let question3Response = document.getElementById('q3').selectedOptions[0].value;
+    console.log("R3 = " + question3Response);
+    let question4Response = document.getElementById('q4').selectedOptions[0].value;
+    console.log("R4 = " + question4Response);
+    let question5Response = document.getElementById('q5').selectedOptions[0].value;
+    console.log("R5 = " + question5Response);
+
+    let compatibility1 = 5-Math.abs(question1Response-STRONGEST_ANSWERS[0]);
+    console.log("C1 = " + compatibility1);
+    let compatibility2 = 5-Math.abs(question2Response-STRONGEST_ANSWERS[1]);
+    console.log("C2 = " + compatibility2);
+    let compatibility3 = 5-Math.abs(question3Response-STRONGEST_ANSWERS[2]);
+    console.log("C3 = " + compatibility3);
+    let compatibility4 = 5-Math.abs(question4Response-STRONGEST_ANSWERS[3]);
+    console.log("C4 = " + compatibility4);
+    let compatibility5 = 5-Math.abs(question5Response-STRONGEST_ANSWERS[4]);
+    console.log("C5 = " + compatibility5);
+
+
+    let totalCompatibility = (compatibility1 + compatibility2 + compatibility3 + compatibility4 + compatibility5);
+    totalCompatibility = totalCompatibility * 4; 
+
+    let userOutput = "<h1>Your compatibility is: " + totalCompatibility + "%</h1>"; 
+    let categories = "<h2>85-100 = We're a perfect match! </h2>";
+    let categories1 = "<p style=font-size:2vw> 70-85 We can still be friends! </p>";
+    let categories2 = "<p style=font-size:2vw> Lower than a 70, Not to sure if we'd get along... </p>";
+    
+
+    if (totalCompatibility > 84) {
+        userOutput += categories;
+    }
+    if (totalCompatibility > 69) {
+        userOutput += categories1;
+    }
+    if (totalCompatibility < 69) {
+        userOutput += categories2;
+    }
+
+    document.getElementById("compatibility").innerHTML = userOutput; 
+}
+
+</script>
+
+
+
+</body>
+</html>
